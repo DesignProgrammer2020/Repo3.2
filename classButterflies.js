@@ -9,11 +9,10 @@ constructor(x, y) {
 
 move(x, y) {
   //make butterflies move horizontally
-  this.y += 1;
-  if (this.y >= windowHeight) {
-    this.y = this.y - windowHeight;
+  this.x += 10;
+  if (this.x >= windowWidth) {
+    this.x = this.x - windowWidth;
   }
-  console.log(`This.y = ${this.y}`);
 }
 
 display() {
@@ -21,6 +20,8 @@ display() {
   scale(this.s);
   translate(this.x, this.y);
 
+  angleMode(DEGREES);
+  rotate(90);
   //butterfly anttenae
   stroke(0);
   strokeWeight(1);
