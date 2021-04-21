@@ -1,6 +1,7 @@
 //images of animals
 let array = [];
 let endangered = [];
+let currentEndangered;
 
 //butterfly drawings in the beginning
 let butterflies = [];
@@ -57,21 +58,17 @@ function draw() {
     textSize(48);
     text("Repopulate endangered animals!", 0.25 * width, 0.4 * height);
     textSize(24);
-    text("Drag to trace. Hit 's' to save.", 0.25 * width, 0.6 * height);
+    text("Drag to trace. Hit 's' to save. Hit 'c' to redraw.", 0.25 * width, 0.6 * height);
   }
 
   if (animating == true && endangered.length > 0) {
     clear();
-    drawPixels();
+    drawPixels();   //multicolored background
 
     //upload images of endangered species
+    imageCounter += 1
     imageCounter %= endangered.length;
     image(endangered[imageCounter], width / 2, height / 2);
-    if (imageCounter < endangered.length - 1) {
-      imageCounter++;
-    } else {
-      imageCounter = 0;
-    }
   }
 
   if (mouseIsPressed) {
@@ -87,7 +84,7 @@ function draw() {
     drawAnimal();
   }
 
-  if (final == true) {
+  if (final == true) {     //last frame
     drawPixels();
     textSize(48);
     //black text
@@ -98,13 +95,14 @@ function draw() {
   }
 }
 
-function randomizer() {
+function randomizer() {   //randomize preloaded images
   animating = false;
   if (endangered[0]) {
     clear();
     drawPixels();
 
     randomIndexEndangered = int(random(endangered.length));
+    currentEndangered = endangered[randomIndexEndangered];
     image(endangered[randomIndexEndangered], width * 0.5, height * 0.5);
 
     endangered.splice([randomIndexEndangered], 1);
@@ -125,6 +123,11 @@ function buttonPressed() {
 function keyTyped() {
   if (key === 's') { //save image
     saveCanvas('drawing', 'png');
+  } else if (key === 'c') { //clear doodling and redraw
+    clear();
+    array = [];
+    drawPixels();
+    image(currentEndangered, width / 2, height / 2);
   }
 }
 
